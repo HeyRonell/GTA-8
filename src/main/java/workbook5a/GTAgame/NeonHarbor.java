@@ -72,7 +72,7 @@ public class NeonHarbor {
                     player.equip (new Bat("Big Bat Busta", 0, 299, true);
                     break;
                 case "9":
-                    player.attack(new Police());
+                    player.attack(new Police("Officer Vale"));
                 case "0":
                     playing = false;
                     System.out.println("Thanks for playing!");
