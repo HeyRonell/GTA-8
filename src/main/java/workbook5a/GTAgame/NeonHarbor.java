@@ -6,7 +6,8 @@ public class NeonHarbor {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Player player = new Player("Jax Mercer");
+        Player player = new Player("Andres");
+        Police officer = new Police("Office Shamony");
 
         boolean playing = true;
 
@@ -66,13 +67,14 @@ public class NeonHarbor {
                     }
                     break;
                 case "7":
-                    player.equip(new Gun("Pistol", 0, 800));
+                    player.equip(new Gun("Pistol", 25, 800));
                     break;
                 case "8":
-                    player.equip (new Bat("Big Bat Busta", 0, 299, true);
+                    player.equip (new Bat("Big Bat Busta", 40, 299, true));
                     break;
                 case "9":
-                    player.attack(new Police("Officer Vale"));
+                    player.attack(officer);
+                    break;
                 case "0":
                     playing = false;
                     System.out.println("Thanks for playing!");
@@ -130,12 +132,16 @@ class Mustang extends Vehicle implements Stealable {
 }
 
 // PARENT CLASS: Shared character information
-class Character {
+abstract class Character {
     private String name;
     private int health = 100;
 
-    public Character(String name) {
+    public Character(String name, int health) {
         this.name = name;
+        this.health = health;
+    }
+
+    public Character(String name) {
     }
 
     public String getName() {
@@ -324,28 +330,19 @@ class Player extends Character {
         }
     }
 
-    public void equip(Gun gun) {
-//        if (weapon == null) {
-//            System.out.println("You need a weapon first!");
-//        } else {
-//            weapon = gun;
-//            weapon.equipWeapon();
-//        }
-        weapon = gun;
+    public void equip(Weapon newWeapon) {
+        weapon = newWeapon;
         weapon.equipWeapon();
     }
 
-    public void unequip(Gun gun) {
-//        if (weapon == null) {
-//            System.out.println("You need a weapon first!");
-//        } else {
-//            weapon = gun;
-//            weapon.unequipWeapon();
-//        }
-        weapon = gun;
+    public void unequip() {
+        if (weapon == null) {
+            System.out.println("You have nothing equipped!");
+            return;
+        }
         weapon.unequipWeapon();
+        weapon = null;
     }
-
     public void earnMoney(int amount) {
         if (amount > 0) {
             money += amount;
@@ -381,7 +378,13 @@ class Player extends Character {
 class Police extends Character {
 
     public Police(String name) {
-        super(name);
+        super(name, 100);                              // cops get 100 health
+        setWeapon(new Gun("Service Pistol", 20, 0));   // uses Character's setWeapon
+    }
+
+
+    private void setWeapon(Gun servicePistol) {
+
     }
 
     public void chase(Player player) {
